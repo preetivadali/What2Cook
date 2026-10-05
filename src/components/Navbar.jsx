@@ -8,15 +8,24 @@ function Navbar() {
       </Link>
 
       <div className="flex gap-6">
-        <Link to="/" className="text-gray-700 hover:text-green-600">
+        <Link
+          to="/"
+          className="text-gray-700 hover:text-green-600"
+        >
           Home
         </Link>
 
-        <Link to="/recipes" className="text-gray-700 hover:text-green-600">
+        <Link
+          to="/recipes"
+          className="text-gray-700 hover:text-green-600"
+        >
           Recipes
         </Link>
 
-        <Link to="/saved" className="text-gray-700 hover:text-green-600">
+        <Link
+          to="/saved"
+          className="text-gray-700 hover:text-green-600"
+        >
           Saved
         </Link>
       </div>
