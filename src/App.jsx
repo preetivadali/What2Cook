@@ -1,6 +1,6 @@
 import Navbar from "./components/NavBar";
 import SearchBox from "./components/SearchBox";
-
+import RecipeCard from "./components/RecipeCard";
 function App() {
   return (
     <>
