@@ -1,6 +1,7 @@
 import Navbar from "./components/NavBar";
 import SearchBox from "./components/SearchBox";
 import RecipeCard from "./components/RecipeCard";
+import Loading from "./components/Loading";
 function App() {
   return (
     <>
@@ -12,6 +13,7 @@ function App() {
         </h1>
 
         <SearchBox />
+        <Loading />
       </div>
     </>
   );
