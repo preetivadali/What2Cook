@@ -28,6 +28,10 @@ function Navbar() {
         >
           Saved
         </Link>
+
+        <Link to="/about" className="text-gray-700 hover:text-green-600">
+  About
+</Link>
       </div>
     </nav>
   );
