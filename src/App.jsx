@@ -1,21 +1,17 @@
-import Navbar from "./components/NavBar";
-import SearchBox from "./components/SearchBox";
-import RecipeCard from "./components/RecipeCard";
-import Loading from "./components/Loading";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Recipes from "./pages/Recipe";
+import RecipeDetails from "./pages/RecipeDetails";
+import SavedRecipes from "./pages/SavedRecipe";
+
 function App() {
   return (
-    <>
-      <Navbar />
-
-      <div className="p-10 text-center">
-        <h1 className="text-4xl font-bold text-green-600">
-          What2Cook 🍳
-        </h1>
-
-        <SearchBox />
-        <Loading />
-      </div>
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/recipes" element={<Recipes />} />
+      <Route path="/recipe/:id" element={<RecipeDetails />} />
+      <Route path="/saved" element={<SavedRecipes />} />
+    </Routes>
   );
 }
 
