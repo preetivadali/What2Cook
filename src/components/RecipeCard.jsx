@@ -1,12 +1,17 @@
+
+import { Link } from "react-router-dom";
 import { Clock } from "lucide-react";
 
 function RecipeCard({ recipe }) {
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden max-w-sm">
+    <Link
+      to={`/recipe/${recipe.id}`}
+      className="block max-w-sm overflow-hidden rounded-xl bg-white shadow-md transition hover:-translate-y-1 hover:shadow-lg"
+    >
       <img
         src={recipe.image}
         alt={recipe.title}
-        className="w-full h-48 object-cover"
+        className="h-48 w-full object-cover"
       />
 
       <div className="p-5">
@@ -14,7 +19,7 @@ function RecipeCard({ recipe }) {
           {recipe.title}
         </h2>
 
-        <p className="flex items-center gap-2 mt-3 text-gray-600">
+        <p className="mt-3 flex items-center gap-2 text-gray-600">
           <Clock size={18} />
           {recipe.readyInMinutes} minutes
         </p>
@@ -23,7 +28,7 @@ function RecipeCard({ recipe }) {
           {recipe.vegetarian ? "🟢 Vegetarian" : "🔴 Non-Vegetarian"}
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
 
