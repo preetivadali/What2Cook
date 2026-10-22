@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -8,7 +7,10 @@ import { searchRecipes } from "../services/recipeApi";
 
 function Recipe() {
   const location = useLocation();
+
   const ingredients = location.state?.ingredients || [];
+  const foodPreference =
+    location.state?.foodPreference || "vegetarian";
 
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,6 +22,7 @@ function Recipe() {
     async function loadRecipes() {
       if (ingredients.length === 0) {
         setRecipes([]);
+        setLoading(false);
         return;
       }
 
@@ -27,18 +30,24 @@ function Recipe() {
       setError("");
 
       try {
-        const results = await searchRecipes(ingredients);
+        const results = await searchRecipes(
+          ingredients,
+          foodPreference
+        );
 
         if (!cancelled) {
           setRecipes(Array.isArray(results) ? results : []);
         }
       } catch (err) {
         if (!cancelled) {
-          console.error(err);
-          setError("Could not load recipes. Please try again.");
+          console.error("Recipe search failed:", err);
+          setError(err.message || "Could not load recipes.");
+          setRecipes([]);
         }
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     }
 
@@ -49,6 +58,12 @@ function Recipe() {
     };
   }, [location.state]);
 
+  const preferenceLabel = {
+    vegetarian: "Vegetarian",
+    "non-vegetarian": "Non-vegetarian",
+    all: "All recipes",
+  }[foodPreference] || "Vegetarian";
+
   return (
     <>
       <Navbar />
@@ -58,6 +73,13 @@ function Recipe() {
           <h1 className="text-3xl font-bold text-gray-900">
             Recipes
           </h1>
+
+          <p className="mt-2 text-gray-600">
+            Food preference:{" "}
+            <span className="font-semibold text-green-700">
+              {preferenceLabel}
+            </span>
+          </p>
 
           {ingredients.length > 0 && (
             <div className="mt-5 flex flex-wrap gap-2">
@@ -82,11 +104,14 @@ function Recipe() {
             <RecipeList recipes={recipes} />
           )}
 
-          {!loading && !error && ingredients.length > 0 && recipes.length === 0 && (
-            <p className="mt-6 text-gray-600">
-              No recipes found. Try different ingredients.
-            </p>
-          )}
+          {!loading &&
+            !error &&
+            ingredients.length > 0 &&
+            recipes.length === 0 && (
+              <p className="mt-6 text-gray-600">
+                No recipes found. Try different ingredients.
+              </p>
+            )}
 
           {ingredients.length === 0 && (
             <p className="mt-6 text-gray-600">
