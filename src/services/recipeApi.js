@@ -1,3 +1,6 @@
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:3001";
+
 export async function searchRecipes(
   ingredients,
   foodPreference = "vegetarian"
@@ -8,7 +11,7 @@ export async function searchRecipes(
   });
 
   const response = await fetch(
-    `http://localhost:3001/api/recipes?${params.toString()}`
+    `${API_BASE_URL}/api/recipes?${params.toString()}`
   );
 
   const result = await response.json();
@@ -19,7 +22,6 @@ export async function searchRecipes(
     );
   }
 
-  // Support either an array response or an object containing data.
   if (Array.isArray(result)) {
     return result;
   }

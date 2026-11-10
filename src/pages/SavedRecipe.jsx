@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Trash2 } from "lucide-react";
 import Navbar from "../components/Navbar";
-import RecipeList from "../components/RecipeLists";
+import RecipeCard from "../components/RecipeCard";
 import {
   getSavedRecipes,
   toggleSavedRecipe,
@@ -40,16 +40,16 @@ function SavedRecipe() {
           </h1>
 
           {recipes.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mt-10">
+            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {recipes.map((recipe) => (
-                <div key={recipe.id} className="relative">
-                  <RecipeList recipes={[recipe]} />
+                <div key={recipe.id} className="relative min-w-0">
+                  <RecipeCard recipe={recipe} />
 
                   <button
                     type="button"
                     aria-label="Delete saved recipe"
                     onClick={() => handleDelete(recipe)}
-                    className="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white text-red-600 shadow-md hover:bg-red-50"
+                   className="absolute right-3 top-20 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white text-red-600 shadow-md hover:bg-red-50"
                   >
                     <Trash2 size={20} />
                   </button>

@@ -1,9 +1,10 @@
+
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
@@ -39,13 +40,9 @@ app.get("/api/recipes", async (req, res) => {
     const params = new URLSearchParams();
     params.set("ingredients", ingredients);
 
-    // Apply the documented vegetarian filter.
     if (preference === "vegetarian") {
       params.set("dietary_tags", "vegetarian");
     }
-
-    // No undocumented non-vegetarian filter is assumed.
-    // "all" also leaves the dietary filter out.
 
     const apiResponse = await fetch(
       `https://recipeapi.io/api/v1/recipes?${params.toString()}`,
@@ -66,10 +63,8 @@ app.get("/api/recipes", async (req, res) => {
       });
     }
 
-    console.log("Requested food preference:", preference);
-    console.log("Recipe API response received.");
-
     res.json(data);
+
   } catch (error) {
     console.error("Recipe search failed:", error.message);
 
@@ -79,6 +74,10 @@ app.get("/api/recipes", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("What2Cook API is running!");
+});
+
 app.listen(PORT, () => {
-  console.log(`Backend running at http://localhost:${PORT}`);
+  console.log(`Backend running on port ${PORT}`);
 });
